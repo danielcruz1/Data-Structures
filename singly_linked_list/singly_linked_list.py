@@ -38,14 +38,14 @@ class LinkedList:
         self.length += 1
 
     def remove_head(self):
-        if self.head is None:
+        if not self.head:
             return None
         elif self.head == self.tail:
             value = self.head.get_value()
             self.head = None
             self.tail = None
+            self.length -= 1
             return value
-
         else: 
             value = self.head.get_value()
             self.head = self.head.get_next()
@@ -54,12 +54,37 @@ class LinkedList:
 
 
     def remove_tail(self):
-        pass
+        if not self.head:
+            return None
 
-    def contains():
-        pass
+        if self.head is self.tail:
+            value = self.head.get_value()
+            self.head = None
+            self.tail = None
+            return value
+
+        current = self.head
+
+        while current.get_next() is not self.tail:
+            current = current.get_next()
+
+        value = self.tail.get_value()
+        self.tail = current
+        return value
+
+    def contains(self, value):
+        if not self.head:
+            return False
+        current = self.head
+        while current:
+            if current.get_value() == value:
+                return True
+            current = current.get_next()
+        return False
     
     def get_max(self):
+        if self.head is None:
+            return None
         cur_node = self.head
         cur_max = self.head.get_value()
         while cur_node is not None:
@@ -67,5 +92,6 @@ class LinkedList:
                 cur_max = cur_node.get_value()
             cur_node = cur_node.get_next()
 
+        return cur_max
 
 
