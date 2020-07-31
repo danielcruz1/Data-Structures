@@ -9,6 +9,9 @@ This part of the project comprises two days:
 2. Implement the `in_order_print`, `bft_print`, and `dft_print` methods
    on the BSTNode class.
 """
+
+from queue import deque
+
 class BSTNode:
     def __init__(self, value):
         self.value = value
@@ -61,23 +64,44 @@ class BSTNode:
             self.right.for_each(fn)
 
             
-'''
+
     # Part 2 -----------------------
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self):
-        pass
+        if self.left:
+            self.left.in_order_print()
+        print(self.value)
+        if self.right:
+            self.right.in_order_print()
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self):
-        pass
+        queue = deque()
+        queue.append(self)
+        while len(queue) > 0:
+            self = queue.popleft()
+            print(self.value)
+            if self.left:
+                queue.append(self.left)
+            if self.right:
+                queue.append(self.right)
+
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self):
-        pass
+        stack = []
+        stack.append(self)
+        while len(stack) > 0:
+            self = stack.pop()
+            print(self.value)
+            if self.left:
+                stack.append(self.left)
+            if self.right:
+                stack.append(self.right)
 
     # Stretch Goals -------------------------
     # Note: Research may be required
@@ -93,7 +117,7 @@ class BSTNode:
 """
 This code is necessary for testing the `print` methods
 """
-bst = BinarySearchTree(1)
+bst = BSTNode(1)
 
 bst.insert(8)
 bst.insert(5)
@@ -110,7 +134,6 @@ print("elegant methods")
 print("pre order")
 bst.pre_order_dft()
 print("in order")
-bst.in_order_dft()
+bst.in_order_print()
 print("post order")
 bst.post_order_dft()  
-'''
